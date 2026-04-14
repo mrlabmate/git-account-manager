@@ -118,6 +118,36 @@ async fn remove_ssh_key_from_platform(
     platform::delete_ssh_key_from_platform(&platform, &token, &pub_key).await
 }
 
+/// Lowercase hostname safe for SSH key filenames (alphanumeric + hyphens).
+fn hostname_slug_for_key() -> String {
+    let raw = hostname::get()
+        .ok()
+        .and_then(|h| h.into_string().ok())
+        .or_else(|| std::env::var("COMPUTERNAME").ok())
+        .filter(|s| !s.is_empty())
+        .unwrap_or_else(|| "unknown".to_string());
+    let s = raw
+        .to_lowercase()
+        .chars()
+        .map(|c| {
+            if c.is_ascii_alphanumeric() || c == '-' {
+                c
+            } else {
+                '-'
+            }
+        })
+        .collect::<String>()
+        .split('-')
+        .filter(|part| !part.is_empty())
+        .collect::<Vec<_>>()
+        .join("-");
+    if s.is_empty() {
+        "unknown".to_string()
+    } else {
+        s
+    }
+}
+
 #[tauri::command]
 async fn generate_and_upload_key(
     platform: String,
@@ -130,7 +160,8 @@ async fn generate_and_upload_key(
         .duration_since(std::time::UNIX_EPOCH)
         .map(|d| d.as_secs())
         .unwrap_or(0);
-    let key_name = format!("id_ed25519_gam_{}_{}_{}", platform, slug, ts);
+    let pc_slug = hostname_slug_for_key();
+    let key_name = format!("id_ed25519_gam_{}_{}_{}_{}", pc_slug, platform, slug, ts);
 
     let pair = ssh::generate_key(&email, &key_name)?;
     let pub_key = ssh::read_public_key(&pair.public_key_path)?;
